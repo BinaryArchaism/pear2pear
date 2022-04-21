@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
 require('dotenv').config({path: './.env'})
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -24,6 +25,11 @@ module.exports = {
     kovan: {
       url: process.env.KOVAN_RPC_URL,
       accounts: [process.env.KOVAN_ACCOUNT_2] // account 2
+    }
+  },
+  etherscan: {
+    apiKey: {
+      kovan: process.env.ETHERSCAN_API_KEY
     }
   }
 };

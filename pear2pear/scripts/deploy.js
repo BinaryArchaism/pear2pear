@@ -17,7 +17,7 @@ async function main() {
   // We get the contract to deploy
   
   const signer = await ethers.getSigner();
-  const contractName = 'Pear2PearNoMediator';
+  const contractName = 'Pear2PearWithMediator';
   const Contract = await hre.ethers.getContractFactory(contractName, signer);
   const contract = await Contract.deploy(signer.address, 60);
 
