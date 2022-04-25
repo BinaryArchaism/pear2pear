@@ -1,11 +1,11 @@
 import React from "react";
 import {Button, Table} from "react-bootstrap";
-import BuyCrypto from "./wallet/Buy";
-import ApproveBuying from "./wallet/ApproveBuying";
-import ApproveSendmentByBuyer from "./wallet/ApproveSendmentByBuyer";
-import ApproveSeller from "./wallet/ApproveSeller";
-import CancelTrade from "./wallet/CancelTrade";
-import CallCourt from "./wallet/CallCourt";
+import BuyCrypto from "./Components/wallet/Buy";
+import ApproveBuying from "./Components/wallet/ApproveBuying";
+import ApproveSendmentByBuyer from "./Components/wallet/ApproveSendmentByBuyer";
+import ApproveSeller from "./Components/wallet/ApproveSeller";
+import CancelTrade from "./Components/wallet/CancelTrade";
+import CallCourt from "./Components/wallet/CallCourt";
 
 const styles = {
     margin: "1%"
@@ -49,11 +49,6 @@ function getSellers() {
                     <td>{seller.currency}</td>
                     <td>
                         <Button style={{marginRight: "5px"}} variant={"secondary"} onClick={() => BuyCrypto()}>Buy</Button>
-                        <Button style={{marginRight: "5px"}} variant={"secondary"} onClick={() => ApproveBuying()}>ApproveBuying</Button>
-                        <Button style={{marginRight: "5px"}} variant={"secondary"} onClick={() => ApproveSendmentByBuyer()}>ApproveSendmentByBuyer</Button>
-                        <Button style={{marginRight: "5px"}} variant={"secondary"} onClick={() => ApproveSeller()}>ApproveSeller</Button>
-                        <Button style={{marginRight: "5px"}} variant={"secondary"} onClick={() => CancelTrade()}>CancelTrade</Button>
-                        <Button style={{marginRight: "5px"}} variant={"secondary"} onClick={() => CallCourt()}>CallCourt</Button>
                     </td>
                 </tr>
             )
