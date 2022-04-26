@@ -7,7 +7,7 @@ const styles = {
     backgroundColor: "#b9ffc8"
 }
 
-const Navibar = ({account, setAccount, currentPage, setCurrentPage}) => {
+const Navibar = ({account, setAccount, setCurrentPage}) => {
     const isConnected = Boolean(account[0]);
 
 

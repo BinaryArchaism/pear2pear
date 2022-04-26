@@ -25,7 +25,7 @@ const App = () => {
 
     return (
         <Container>
-            <Navibar account={account} setAccount={setAccount} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+            <Navibar account={account} setAccount={setAccount} setCurrentPage={setCurrentPage}/>
             {showPageToRender()}
         </Container>
     );

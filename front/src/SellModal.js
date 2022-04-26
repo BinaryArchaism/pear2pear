@@ -33,9 +33,11 @@ const SellModal = ({account, setCurrentPage}) => {
                     <p>What's currency of yours ethers? </p>
                 </Modal.Body>
                 <Modal.Footer>
+                    {/*TODO: send data to back after some checks*/}
                     <Button variant="primary" onClick={() => setCurrentPage('Sellers')}>
                         Publish
                     </Button>
+
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
