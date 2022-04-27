@@ -32,6 +32,8 @@ export default function Sellers() {
     );
 }
 
+// TODO
+
 function getSellers() {
     let sellers = [
         {id: 1, name: "random", amount: 1000, currency: 3700, address: "0x9ec60043d3466a31cadd2810fb15638125777376"},

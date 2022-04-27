@@ -2,12 +2,25 @@ package main
 
 import (
 	"github.com/BinaryArchaism/pear2pear/back/internal/handlers"
-	"github.com/gofiber/fiber/v2"
+	"github.com/BinaryArchaism/pear2pear/back/internal/repository"
+	"github.com/BinaryArchaism/pear2pear/back/internal/services"
+	"github.com/joho/godotenv"
+	"log"
 )
 
 func main() {
-	app := fiber.New()
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-	handler := handlers.NewHandler(app)
+	mdb, err := repository.InitMongo()
+	if err != nil {
+		log.Fatalf("Error creating mongo: %e", err)
+	}
 
+	repo := repository.NewRepository(mdb)
+	service := services.NewService(repo)
+	handler := handlers.NewHandler(service)
+
+	log.Fatal(handler.StartApp())
 }
