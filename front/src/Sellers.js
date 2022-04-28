@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Table} from "react-bootstrap";
 import axios from "axios";
+import "./Sellers.css"
 
 const styles = {
     margin: "1%"
@@ -51,7 +52,7 @@ export default function Sellers({account}) {
 
     return (
         <div style={styles}>
-            <Table striped bordered hover>
+            <Table className={"table"}>
                 <thead>
                 <tr>
                     <th>Address</th>

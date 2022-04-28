@@ -8,6 +8,7 @@ import SellModal from './SellModal';
 import axios from "axios";
 import Trade from "./Trade";
 import BuyCrypto from "./Components/wallet/Buy";
+import './App.css';
 
 const App = () => {
     const [account, setAccount] = useState([]);
@@ -47,12 +48,12 @@ const App = () => {
     function showSuggestion() {
         if (!suggestion) return <></>
         return (
-            <Modal show={close} onHide={handleClose}>
+            <Modal show={close} onHide={handleClose} centered={true}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Suggestion</Modal.Title>
+                    <Modal.Title>Trade offer</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>From: {suggestion.buyer_address}</p>
+                    <p>From: {suggestion.buyer_address.substr(0,6) + "..." + suggestion.buyer_address.substr(suggestion.buyer_address.length-4, suggestion.buyer_address.length)}</p>
                     <p>Amount: {suggestion.amount_suggestion}</p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -88,11 +89,14 @@ const App = () => {
     }
 
     return (
-        <Container>
+        <div className={"overlay"}>
+        <Container className="App">
             <Navibar account={account} setAccount={setAccount} setCurrentPage={setCurrentPage}/>
             {showPageToRender()}
             {showSuggestion()}
         </Container>
+            <div className="background"></div>
+        </div>
     );
 }
 

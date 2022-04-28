@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
 import {Button, Modal} from 'react-bootstrap'
+import "./SellModal.css"
+
+const styles = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)"
+}
 
 const SellModal = ({account, setCurrentPage}) => {
     const isConnected = Boolean(account[0]);
@@ -8,15 +16,15 @@ const SellModal = ({account, setCurrentPage}) => {
 
     function showIfNotConnected() {
         return (
-            <Modal show={!isConnected} onHide={handleClose}>
+            <Modal show={!isConnected} onHide={handleClose} style={styles} centered={true}>
                 <Modal.Header closeButton>
-                <Modal.Title>Warning</Modal.Title>
+                    <Modal.Title>Warning</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>You must be connected to the wallet to sell crypto</Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
         );
@@ -48,46 +56,52 @@ const SellModal = ({account, setCurrentPage}) => {
             .then((data) => {
                 console.log(data);
             });
-     }
+    }
 
     function sell() {
         return (
-            <Modal show={isConnected} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add your suggestion to platform</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            Amount of eth:
-                            <input type="text" name="amount" onChange={handleChangeAmount} />
-                        </label>
-                        <label>
-                            Currency of eth:
-                            <input type="text" name="currency" onChange={handleChangeCurrency} />
-                        </label>
-                        <Button type="submit" variant="primary" >
-                            Publish
-                        </Button>
-                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setCurrentPage('Sellers')}>
-                        Close
-                    </Button>
+            <div className={"modals"}>
+                <Modal show={isConnected} onHide={handleClose} centered={true} autoFocus={true}>
+                    <Modal.Header closeButton>
+                        <Modal.Title className={"modal-content"}>Trade offer</Modal.Title>
+                    </Modal.Header>
+                    <form onSubmit={handleSubmit} className={"m-2"}>
+                        <Modal.Body className={"modal-body"}>
 
-                </Modal.Footer>
-            </Modal>
+                            <div className={"px-2"}>
+                                <label>
+                                    Amount of eth:
+                                    <input type="text" name="amount" onChange={handleChangeAmount} />
+                                </label>
+                            </div>
+                            <div className={"px-2"}>
+                                <label>
+                                    Price per eth:
+                                    <input type="text" name="currency" onChange={handleChangeCurrency} />
+                                </label>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button className={"px-2"} type="submit" variant="primary" >
+                                Publish
+                            </Button>
+                            <Button variant="secondary" onClick={() => setCurrentPage('Sellers')}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </form>
+                </Modal>
+            </div>
         );
     }
 
     return (
         <div>
-             {isConnected ? (
-                 sell()
-             ): (
-                 showIfNotConnected()
-             )}
+            {isConnected ? (
+                sell()
+            ): (
+                showIfNotConnected()
+            )}
         </div>
     );
 }

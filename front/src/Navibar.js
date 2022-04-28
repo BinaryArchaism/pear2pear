@@ -3,7 +3,7 @@ import {Nav, Navbar, Button} from "react-bootstrap";
 import { ethers } from 'ethers';
 
 const styles = {
-    border: "1px solid black",
+    border: "1px solid",
     backgroundColor: "#b9ffc8"
 }
 
@@ -49,9 +49,9 @@ const Navibar = ({account, setAccount, setCurrentPage}) => {
                 <Navbar.Toggle aria-controls={"responsive-navber-nav"} />
                 <Navbar.Collapse id={"responsive-navber-nav"}>
                     <Nav className={"mr-auto"}>
-                        <Nav.Link onClick={() => {setCurrentPage('Home');}}>Home</Nav.Link>
-                        <Nav.Link onClick={() => {setCurrentPage('Sellers');}}>Buy Crypto</Nav.Link>
-                        <Nav.Link onClick={() => {setCurrentPage('Sell');}}>Sell Crypto</Nav.Link>
+                        <Nav.Link className={"px-4"} onClick={() => {setCurrentPage('Home');}}>Home</Nav.Link>
+                        <Nav.Link className={"px-4"} onClick={() => {setCurrentPage('Sellers');}}>Buy</Nav.Link>
+                        <Nav.Link className={"px-4"} onClick={() => {setCurrentPage('Sell');}}>Sell</Nav.Link>
                     </Nav>
                     <Nav className={"ms-auto"}>
                         {isConnected ? (
