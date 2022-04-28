@@ -1,59 +1,69 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Table} from "react-bootstrap";
-import BuyCrypto from "./Components/wallet/Buy";
-import ApproveBuying from "./Components/wallet/ApproveBuying";
-import ApproveSendmentByBuyer from "./Components/wallet/ApproveSendmentByBuyer";
-import ApproveSeller from "./Components/wallet/ApproveSeller";
-import CancelTrade from "./Components/wallet/CancelTrade";
-import CallCourt from "./Components/wallet/CallCourt";
+import axios from "axios";
 
 const styles = {
     margin: "1%"
 }
 
-export default function Sellers() {
+export default function Sellers({account}) {
+    const [sellers, setSellers] = useState([])
+    useEffect(() => {
+        axios.get(`http://localhost:8080/get_sellers_queue`)
+            .then(res => {
+                const data = res.data.map(obj => ({
+                    name: obj.address,
+                    amount: obj.total_amount,
+                    currency: obj.currency
+                }));
+                setSellers(data);
+            });
+    }, [])
+
+    const SendSuggestion = (addressSeller, addressBuyer, amount) => {
+        axios.post("http://localhost:8080/send_buy_suggestion",
+            {
+                'seller_address': addressSeller,
+                'buyer_address': addressBuyer,
+                'amount_suggestion': amount
+            }
+        ).then()
+
+     }
+
+    const showSellers = () => {
+        if (!sellers) return (<></>);
+        return (
+            sellers.map(seller => {
+                return (
+                    <tr key={seller.id}>
+                        <td>{seller.name}</td>
+                        <td>{seller.amount}</td>
+                        <td>{seller.currency}</td>
+                        <td>
+                            <Button style={{marginRight: "5px"}} variant={"secondary"} onClick={() =>{SendSuggestion(seller.name, account[0], seller.amount)}}>Buy</Button>
+                        </td>
+                    </tr>
+                )
+            })
+        );
+    }
+
     return (
         <div style={styles}>
             <Table striped bordered hover>
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Nickname</th>
+                    <th>Address</th>
                     <th>Max amount</th>
                     <th>Currency</th>
                     <th>Buy</th>
                 </tr>
                 </thead>
                 <tbody>
-                {getSellers()}
+                {showSellers()}
                 </tbody>
             </Table>
         </div>
     );
-}
-
-// TODO
-
-function getSellers() {
-    let sellers = [
-        {id: 1, name: "random", amount: 1000, currency: 3700, address: "0x9ec60043d3466a31cadd2810fb15638125777376"},
-        {id: 2, name: "test", amount: 90, currency: 3701},
-        {id: 3, name: "lol", amount: 432, currency: 3690},
-        {id: 4, name: "kek", amount: 23, currency: 3700},
-    ]
-    return (
-        sellers.map(seller => {
-            return (
-                <tr>
-                    <td>{seller.id}</td>
-                    <td>{seller.name}</td>
-                    <td>{seller.amount}</td>
-                    <td>{seller.currency}</td>
-                    <td>
-                        <Button style={{marginRight: "5px"}} variant={"secondary"} onClick={() => BuyCrypto()}>Buy</Button>
-                    </td>
-                </tr>
-            )
-        })
-    )
 }

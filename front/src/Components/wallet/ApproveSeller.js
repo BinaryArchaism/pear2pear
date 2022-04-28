@@ -1,10 +1,8 @@
 import {Contract, ethers} from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider/dist/detect-provider";
 import Pear2PearNoMediator from "./contracts/Pear2PearNoMediator.json"
-import SessionId from "./EventCatch";
 
-const ApproveSeller = async () => {
-    console.log("lets ApproveSendmentByBuyer")
+const ApproveSeller = async (sessionId) => {
     let provider = await detectEthereumProvider();
     if(!provider) {
         return
@@ -18,9 +16,7 @@ const ApproveSeller = async () => {
         Pear2PearNoMediator.abi,
         signer
     );
-    console.log(SessionId.sessionId);
-
-    let tx = await pear2PearNoMediator.approveSeller(SessionId.sessionId);
+    let tx = await pear2PearNoMediator.approveSeller(sessionId);
     await tx.wait();
 }
 export default ApproveSeller;

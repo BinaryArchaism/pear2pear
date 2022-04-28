@@ -1,10 +1,8 @@
 import {Contract, ethers} from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider/dist/detect-provider";
 import Pear2PearNoMediator from "./contracts/Pear2PearNoMediator.json"
-import SessionId from "./EventCatch";
 
-const ApproveBuying = async () => {
-    console.log("lets ApproveBuing")
+const ApproveBuying = async (sessionId, amount) => {
     let provider = await detectEthereumProvider();
     if(!provider) {
         return
@@ -18,8 +16,7 @@ const ApproveBuying = async () => {
         Pear2PearNoMediator.abi,
         signer
     );
-    console.log(SessionId.sessionId);
-    let tx = await pear2PearNoMediator.acceptOffer(SessionId.sessionId, {value: ethers.utils.parseEther("0.05")});
+    let tx = await pear2PearNoMediator.acceptOffer(sessionId, {value: ethers.utils.parseEther((amount/2).toLocaleString())});
     await tx.wait();
 }
 export default ApproveBuying;

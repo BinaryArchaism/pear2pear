@@ -3,16 +3,14 @@ import detectEthereumProvider from "@metamask/detect-provider/dist/detect-provid
 import Pear2PearNoMediator from "./contracts/Pear2PearNoMediator.json"
 //eslint-disable-next-line
 import SessionId from "./EventCatch";
+import axios from "axios";
 
-const BuyCrypto = async () => {
-    SessionId.sessionId = -1;
-    console.log("lets sell")
+const BuyCrypto = async (account, addressBuyer, amount, setSessionId) => {
     let provider = await detectEthereumProvider();
     if(!provider) {
         return
     }
     await provider.request({ method: 'eth_requestAccounts' });
-    //const networkId = await provider.request({ method: 'net_version' })
     provider = new ethers.providers.Web3Provider(provider);
     const signer = provider.getSigner();
     const pear2PearNoMediator = new Contract(
@@ -21,13 +19,21 @@ const BuyCrypto = async () => {
         signer
     );
 
-    let tx = await pear2PearNoMediator.sendOffer("0xD4Badf85219EebaFE0964f6D69727887382F57AF", {value: ethers.utils.parseEther("0.1")});
+    let tx = await pear2PearNoMediator.sendOffer(addressBuyer, {value: ethers.utils.parseEther(amount.toLocaleString())});
     tx = await tx.wait();
 
     //eslint-disable-next-line
     const event = tx.events.find(event => event.event === 'TradeOffer');
-    //SessionId.sessionId = event.args[2];
-    console.log(SessionId.sessionId);
-
+    setSessionId(event.args[2]);
+    axios.post("http://localhost:8080/create_session",
+        {
+            "buy_suggestion": {
+                "seller_address": account[0],
+                "buyer_address": addressBuyer,
+                "amount_suggestion": amount
+            },
+            "session_id": event.args[2]
+        }
+    ).then()
 }
 export default BuyCrypto;

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Button, Modal} from 'react-bootstrap'
-import axios from "axios";
 
 const SellModal = ({account, setCurrentPage}) => {
     const isConnected = Boolean(account[0]);
@@ -36,25 +35,6 @@ const SellModal = ({account, setCurrentPage}) => {
             total_amount: parseFloat(amount),
             currency: parseFloat(currency),
         };
-        // axios("http://localhost:8080/ping", {
-        //     method: 'GET',
-        //     mode: 'no-cors',
-        //     withCredentials: true,
-        //     credentials: 'same-origin'
-        // }).then(res => {
-        //     console.log(res);
-        //     console.log(res.data)
-        // })
-        // const headers = {
-        //     'Accept': '*/*',
-        //     'Content-Type': 'application/json',
-        //     'Access-Control-Allow-Origin': 'http://localhost:8080',
-        //     'Origin': 'http://localhost:3001'
-        // }
-        // axios.post(`http://localhost:8080/add_seller_to_queue`, {seller}).then(res => {
-        //     console.log(res);
-        //     console.log(res.data);
-        // })
         fetch("http://localhost:8080/add_seller_to_queue",
             {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -86,13 +66,12 @@ const SellModal = ({account, setCurrentPage}) => {
                             Currency of eth:
                             <input type="text" name="currency" onChange={handleChangeCurrency} />
                         </label>
-                        <Button type="submit" variant="primary">
+                        <Button type="submit" variant="primary" >
                             Publish
                         </Button>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    {/*TODO: send data to back after some checks*/}
                     <Button variant="secondary" onClick={() => setCurrentPage('Sellers')}>
                         Close
                     </Button>

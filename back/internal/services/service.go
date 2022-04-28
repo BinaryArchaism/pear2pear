@@ -11,8 +11,10 @@ type ServiceInterface interface {
 	GetSellerQueue(ctx context.Context) ([]models.Seller, error)
 
 	SendBuySuggestion(ctx context.Context, buySuggestion models.BuySuggestion) error
-	ApproveSuggestion(ctx context.Context, buyerAddress string) (int, error) //sendOffer smart-contact function to call
-	CreateSession(ctx context.Context, sessionId int64) error                //called after ApproveSuggestion to fix session in db. front should create Deal page
+	CheckIfSuggestion(ctx context.Context, address string, isBuyer bool) (models.BuySuggestion, error)
+	CreateSession(ctx context.Context, deal models.Deal) error //called after ApproveSuggestion to fix session in db. front should create Deal page
+
+	GetSessionId(ctx context.Context, buySuggestion models.BuySuggestion) (int, error)
 }
 
 func NewService(repository repository.RepositoryInterface) ServiceInterface {
@@ -35,12 +37,14 @@ func (s *Service) SendBuySuggestion(ctx context.Context, buySuggestion models.Bu
 	return s.repository.SendBuySuggestion(ctx, buySuggestion)
 }
 
-func (s *Service) ApproveSuggestion(ctx context.Context, buyerAddress string) (int, error) {
-	//TODO implement me
-	panic("implement me")
+func (s *Service) CheckIfSuggestion(ctx context.Context, address string, isBuyer bool) (models.BuySuggestion, error) {
+	return s.repository.CheckIfSuggestion(ctx, address, isBuyer)
 }
 
-func (s *Service) CreateSession(ctx context.Context, sessionId int64) error {
-	//TODO implement me
-	panic("implement me")
+func (s *Service) CreateSession(ctx context.Context, deal models.Deal) error {
+	return s.repository.CreateSession(ctx, deal)
+}
+
+func (s *Service) GetSessionId(ctx context.Context, buySuggestion models.BuySuggestion) (int, error) {
+	return s.repository.GetSessionId(ctx, buySuggestion)
 }

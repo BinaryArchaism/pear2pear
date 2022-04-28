@@ -1,10 +1,8 @@
 import {Contract, ethers} from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider/dist/detect-provider";
 import Pear2PearNoMediator from "./contracts/Pear2PearNoMediator.json"
-import SessionId from "./EventCatch";
 
-const CancelTrade = async () => {
-    console.log("lets sell")
+const CancelTrade = async (sessionId) => {
     let provider = await detectEthereumProvider();
     if(!provider) {
         return
@@ -18,9 +16,7 @@ const CancelTrade = async () => {
         Pear2PearNoMediator.abi,
         signer
     );
-    console.log(SessionId.sessionId);
-
-    let tx = await pear2PearNoMediator.cancelTrade(SessionId.sessionId);
+    let tx = await pear2PearNoMediator.cancelTrade(sessionId);
     await tx.wait();
 }
 export default CancelTrade;
