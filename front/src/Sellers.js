@@ -52,7 +52,7 @@ export default function Sellers({account}) {
 
     return (
         <div style={styles}>
-            <Table className={"table"}>
+            <Table className={"table border-2"}>
                 <thead>
                 <tr>
                     <th>Address</th>

@@ -12,7 +12,7 @@ const Home = () => {
             </div>
             <div className={"row m-5 d-flex align-items-end w-25 position-absolute bottom-0 start-50 translate-middle-x"}>
                 <h6 className={"col-sm"}>Watch source code on</h6>
-                <a className={"col-sm"} href='https://github.com/Gernar/pear2pear'>
+                <a className={"col-sm"} href='https://github.com/BinaryArchaism/pear2pear'>
                     <Image src={GitHub} />
                 </a>
             </div>

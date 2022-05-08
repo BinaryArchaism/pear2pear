@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navibar from "./Navibar";
-import {Button, Container, Modal} from "react-bootstrap";
+import {Button, Container, Image, Modal} from "react-bootstrap";
 import Sellers from "./Sellers";
 import Home from "./Home";
 import SellModal from './SellModal';
@@ -9,14 +9,15 @@ import axios from "axios";
 import Trade from "./Trade";
 import BuyCrypto from "./Components/wallet/Buy";
 import './App.css';
+import BackGroundGuys from "./assets/background-guys.jpg";
 
 const App = () => {
     const [account, setAccount] = useState([]);
-    const [currentPage, setCurrentPage] = useState('');
+    const [currentPage, setCurrentPage] = useState('Home');
     const [isBuyer, setIsBuyer] = useState(false);
     const [sessionId, setSessionId] = useState();
-
     const [suggestion, setSuggestion] = useState(undefined);
+
     useEffect(() => {
         const interval = setInterval(() => {
             if (currentPage !== 'Trade') {
@@ -91,11 +92,11 @@ const App = () => {
     return (
         <div className={"overlay"}>
         <Container className="App">
-            <Navibar account={account} setAccount={setAccount} setCurrentPage={setCurrentPage}/>
+            <Navibar account={account} setAccount={setAccount} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
             {showPageToRender()}
             {showSuggestion()}
         </Container>
-            <div className="background"></div>
+            <Image  className="background" src={BackGroundGuys} />
         </div>
     );
 }

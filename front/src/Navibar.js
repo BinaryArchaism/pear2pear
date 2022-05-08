@@ -7,7 +7,7 @@ const styles = {
     backgroundColor: "#b9ffc8"
 }
 
-const Navibar = ({account, setAccount, setCurrentPage}) => {
+const Navibar = ({account, setAccount, currentPage, setCurrentPage}) => {
     const isConnected = Boolean(account[0]);
 
 
@@ -24,12 +24,12 @@ const Navibar = ({account, setAccount, setCurrentPage}) => {
 
     function showAccount() {
         getBalance();
-        const shortAccount = account[0].substr(0,6) + "..." + account[0].substr(account[0].length-4, account[0].length);
+        const shortAccount = account[0].substr(0,5) + "..." + account[0].substr(account[0].length-4, account[0].length);
         return(
             <div>
-                <strong>Account: </strong>{shortAccount}
+                <strong>Account:</strong>{shortAccount}
                 
-                <strong style={{marginLeft: "5px"}}>Balance: </strong>{Math.round(balance * 1000) / 1000}<strong style={{marginLeft: "5px"}}>ETH</strong>
+                <strong style={{marginLeft: "10px"}}>Balance:</strong>{Math.round(balance * 1000) / 1000}<strong style={{marginLeft: "5px"}}>ETH</strong>
             </div>
         );
     }
@@ -42,17 +42,41 @@ const Navibar = ({account, setAccount, setCurrentPage}) => {
         setBalance(ethers.utils.formatEther(balance));
     }
 
+    function showCurrentPage() {
+
+        return (
+            <Nav className={"mr-auto"}>
+                {currentPage === 'Home' ? (
+                        <Nav.Link style={{color: "black", textDecoration: "underline"}} className={"px-3"} onClick={() => {setCurrentPage('Home');}}>Home</Nav.Link>
+                    ) :
+                    (<Nav.Link className={"px-3"} onClick={() => {setCurrentPage('Home');}}>Home</Nav.Link>
+                    )}
+                {currentPage === 'Sellers' ? (
+                        <Nav.Link style={{color: "black", textDecoration: "underline"}} className={"px-3"} onClick={() => {setCurrentPage('Sellers');}}>Buy</Nav.Link>
+                    ) :
+                    (<Nav.Link className={"px-3"} onClick={() => {setCurrentPage('Sellers');}}>Buy</Nav.Link>
+                    )}
+                {currentPage === 'Sell' ? (
+                        <Nav.Link style={{color: "black", textDecoration: "underline"}} className={"px-3"} onClick={() => {setCurrentPage('Sell');}}>Sell</Nav.Link>
+                    ) :
+                    (<Nav.Link className={"px-3"} onClick={() => {setCurrentPage('Sell');}}>Sell</Nav.Link>
+                    )}
+                {currentPage === 'Trades' ? (
+                        <Nav.Link style={{color: "black", textDecoration: "underline"}} className={"px-3"} onClick={() => {setCurrentPage('Home');}}>Trades</Nav.Link>
+                    ) :
+                    (<Nav.Link className={"px-3"} onClick={() => {setCurrentPage('Home');}}>Trades</Nav.Link>
+                    )}
+            </Nav>
+        );
+    }
+
     return (
         <div style={{margin: "1%"}}>
             <Navbar style={styles} className={"p-3"}>
                 <Navbar.Brand>Pear2Pear</Navbar.Brand>
                 <Navbar.Toggle aria-controls={"responsive-navber-nav"} />
                 <Navbar.Collapse id={"responsive-navber-nav"}>
-                    <Nav className={"mr-auto"}>
-                        <Nav.Link className={"px-4"} onClick={() => {setCurrentPage('Home');}}>Home</Nav.Link>
-                        <Nav.Link className={"px-4"} onClick={() => {setCurrentPage('Sellers');}}>Buy</Nav.Link>
-                        <Nav.Link className={"px-4"} onClick={() => {setCurrentPage('Sell');}}>Sell</Nav.Link>
-                    </Nav>
+                    {showCurrentPage()}
                     <Nav className={"ms-auto"}>
                         {isConnected ? (
                             showAccount()

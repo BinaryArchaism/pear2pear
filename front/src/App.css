@@ -8,6 +8,7 @@
 
 body {
     overflow: hidden;
+    background-color: #bedadb;
 }
 
 .overlay {
@@ -23,9 +24,6 @@ body {
 .background {
     z-index: -1;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("assets/background.jpg");
+    right: 3%;
+    bottom: 3%;
 }
